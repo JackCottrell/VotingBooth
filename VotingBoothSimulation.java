@@ -11,5 +11,7 @@ public class VotingBoothSimulation{
 		frame.setSize(600, 400);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setResizable(false);
 	}
 }
+
