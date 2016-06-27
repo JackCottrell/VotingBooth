@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * @author Bob Molenhouse
  * @author Jack Cottrell
- * @author Roger Ferguson
+ * @author Colin Lewis
  */
 public class Booth implements ClockListener {
 	private ArrayList<Voter> Q = new ArrayList<Voter>();
