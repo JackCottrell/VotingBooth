@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 /**
  * @author Bob Molenhouse
+ * @author Jack Cottrell
  * @author Roger Ferguson
  */
 public class Booth implements ClockListener {
