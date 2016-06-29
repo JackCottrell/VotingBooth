@@ -151,17 +151,39 @@ public class VotingBoothPanel extends JPanel {
                 Booth booth = new Booth();
 
                 // int numOfTicksNextPerson = 20
-                // int averageBoothTime = 20
+                // int averageBoothTime = 18
 
                 VoterProducer produce = new VoterProducer(booth, 20, 18);
                 clk.add(produce);
                 clk.add(booth);
 
                 clk.run(10000);
-                
+
+               int secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
+                double secondsCheckIn = Double.parseDouble(txtAvgSecondsCheckIn.getText());
+                double totalSec =Double.parseDouble(txtTotalSeconds.getText());
+                double avgTimeVoting = Double.parseDouble(txtAvgSecVoting.getText());
+                int secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
+                int numBooths = Integer.parseInt(txtNumBooths.getText());
+
+
+                updateLabels(booth,secondsToPerson,secondsCheckIn,totalSec,
+                                    avgTimeVoting,secondsLeave,numBooths );
 
             }
 
         }
+    }
+
+    private void  updateLabels(Booth booth, int secondsToPerson, double avgSecondsToCheckIn, double totalSeconds,
+                                double avgSecVoting, int secondsToLeave, int numBooths){
+        throughput.setText(""+booth.getThroughPut());
+        avgVoterFinish.setText((""));
+        numPeopleLeft.setText(""+booth.getLeft());
+        maxQAL.setText("");
+        maxQMZ.setText("");
+        votingBoothLine.setText("" + booth.getMaxQlength());
+
+
     }
 }
