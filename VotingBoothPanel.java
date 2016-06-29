@@ -147,7 +147,19 @@ public class VotingBoothPanel extends JPanel {
 
             }
             if(e.getSource()==startSim){
+                Clock clk = new Clock();
+                Booth booth = new Booth();
+
+                // int numOfTicksNextPerson = 20
+                // int averageBoothTime = 20
+
+                VoterProducer produce = new VoterProducer(booth, 20, 18);
+                clk.add(produce);
+                clk.add(booth);
+
+                clk.run(10000);
                 
+
             }
 
         }
