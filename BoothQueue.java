@@ -41,6 +41,9 @@ public class BoothQueue implements ClockListener {
 				//if free add the person a front of line to that booth
 				//also remove them from Q
 				if(booths[i].isOpen()){
+					//record the time that the person is added to booth
+					Q.get(0).setBoothInTime(tick);
+					//remove from Q and add to booth
 					booths[i].add(Q.remove(0));
 				}
 			}

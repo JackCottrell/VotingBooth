@@ -4,7 +4,8 @@ package VoterSim;
  */
 public class Voter {
 	private int tickTime;
-	private Booth Destination;
+	//the value of tick when the person enters a booth
+	private int boothInTime;
 	
 	// max time person stays in line
 	protected double boothTime;
@@ -16,14 +17,6 @@ public class Voter {
 	
 	public double getCheckInTime() {
 		return checkInTime;
-	}
-	
-	public Booth getDestination() {
-		return Destination;
-	}
-
-	public void setDestination(Booth destination) {
-		Destination = destination;
 	}
 	
 	public int getTickTime() {
@@ -40,5 +33,13 @@ public class Voter {
 	
 	public void setCheckInTime(double checkInTime) {
 		this.checkInTime = checkInTime;
+	}
+
+	public int getBoothInTime() {
+		return boothInTime;
+	}
+
+	public void setBoothInTime(int boothInTime) {
+		this.boothInTime = boothInTime;
 	}
 }
