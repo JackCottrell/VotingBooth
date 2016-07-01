@@ -1,3 +1,5 @@
+package VoterSim;
+
 import javax.swing.JFrame;
 
 public class VotingBoothSimulation{
@@ -14,4 +16,3 @@ public class VotingBoothSimulation{
 		frame.setResizable(false);
 	}
 }
-
