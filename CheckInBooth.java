@@ -11,10 +11,10 @@ public class CheckInBooth implements ClockListener {
 	private int timeOfNextEvent = 0;
 	private int maxQlength = 0;
 	private Voter person;   
-	private Booth booth;
+	private BoothQueue mainQueue;
 	
-	public CheckInBooth(Booth booth){
-		this.booth = booth;
+	public CheckInBooth(BoothQueue mainQueue){
+		this.mainQueue = mainQueue;
 	}
 	
 	public void add (Voter person)
@@ -30,7 +30,7 @@ public class CheckInBooth implements ClockListener {
 				person = Q.remove(0);		
 				timeOfNextEvent = tick + (int) (person.getCheckInTime()
 						+ 1);
-				booth.add(person); 
+				mainQueue.add(person); 
 			}	
 		}
 	}
