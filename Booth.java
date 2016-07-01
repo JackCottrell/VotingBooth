@@ -1,5 +1,3 @@
-package VoterSim;
-
 import java.util.ArrayList;
 
 public class Booth implements ClockListener {
@@ -37,4 +35,3 @@ public class Booth implements ClockListener {
 			return true;
 	}
 }
-

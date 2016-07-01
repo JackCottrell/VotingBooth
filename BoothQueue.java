@@ -1,5 +1,3 @@
-package VoterSim;
-
 import java.util.ArrayList;
 
 public class BoothQueue implements ClockListener {

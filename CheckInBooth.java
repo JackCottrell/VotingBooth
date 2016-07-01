@@ -1,5 +1,3 @@
-package VoterSim;
-
 import java.util.ArrayList;
 /**
  * @author   Jack Cottrell
@@ -43,4 +41,3 @@ public class CheckInBooth implements ClockListener {
 		return maxQlength;
 	}
 }
-

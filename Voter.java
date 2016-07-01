@@ -1,4 +1,3 @@
-package VoterSim;
 /**
  * @author   Roger Ferguson
  */

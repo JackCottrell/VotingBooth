@@ -1,5 +1,3 @@
-package VoterSim;
-
 import javax.swing.JFrame;
 
 public class VotingBoothSimulation{

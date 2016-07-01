@@ -1,7 +1,5 @@
-package VoterSim;
-
 /**
- * @author   Roger Ferguson
+ * @author Roger Ferguson
  */
 public class Clock {
 

@@ -1,4 +1,4 @@
-package VoterSim;
+
 
 import java.util.Random;
 
