@@ -5,11 +5,12 @@ import java.util.ArrayList;
 public class Booth implements ClockListener {	
 	private int timeOfNextEvent = 0;
 	private Voter person;   // this is the person at the booth. 
-	private int completed = 0;
 	private BoothQueue boothQueue;
+	private SimStatus info;
 	
-	public Booth(BoothQueue boothQueue){
+	public Booth(BoothQueue boothQueue, SimStatus info){
 		this.boothQueue = boothQueue;
+		this.info = info;
 	}
 	
 //	public void add (Voter person)
@@ -28,13 +29,10 @@ public class Booth implements ClockListener {
 				if(!boothQueue.getQ().isEmpty()){
 				person = boothQueue.getVoter();		// do not send this person as of yet, make them wait. 
 				timeOfNextEvent = tick + (int) (person.getBoothTime() + 1);
-				completed++;	
+				info.incThroughPut();	
 				}
 //			}	
 		}
 	}
 
-	public int getThroughPut() {
-		return completed;
-	}
 }

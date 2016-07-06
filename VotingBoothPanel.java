@@ -182,20 +182,23 @@ public class VotingBoothPanel extends JPanel {
 
             }
             if(e.getSource()==startSim){;
-            	BoothQueue boothQueue = new BoothQueue();;
+            	
+            	SimStatus info = new SimStatus();
+            	BoothQueue boothQueue = new BoothQueue(info);
+            	info.setLeaveTime(secondsLeave);
         				
         			
             	Clock clk = new Clock();
         	
-        		CheckInBooth AL = new CheckInBooth(boothQueue);
-        		CheckInBooth MZ = new CheckInBooth(boothQueue);
-        		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson, avgTimeVoting, secondsCheckIn);
+        		CheckInBooth AL = new CheckInBooth(boothQueue, info);
+        		CheckInBooth MZ = new CheckInBooth(boothQueue, info);
+        		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson, avgTimeVoting, secondsCheckIn, info);
         		
         		clk.add(boothQueue);
         		clk.add(AL);
         		clk.add(MZ);
         		for(int i = 0; i < numBooths; i++){
-        			Booth booth = new Booth(boothQueue);
+        			Booth booth = new Booth(boothQueue, info);
         			clk.add(booth);
         		}
         		clk.add(produce);
@@ -204,12 +207,12 @@ public class VotingBoothPanel extends JPanel {
         		clk.run(totalSec);
             	
         		//Update Labels
-        		//throughput.setText("" +booth.getThroughPut());
-        		//avgVoterFinish.setText("" +(totalSec/booth.getThroughPut()));
+        		throughput.setText("" +info.getThroughPut());
+        		avgVoterFinish.setText("" +(totalSec/info.getThroughPut()));
         		numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
         		maxQAL.setText("" + AL.getMaxQlength());
         		maxQMZ.setText("" + MZ.getMaxQlength());
-        		votingBoothLine.setText("" );
+        		votingBoothLine.setText("" + boothQueue.getMaxQlength());
         		
         
         		

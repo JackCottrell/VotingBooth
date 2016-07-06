@@ -10,19 +10,21 @@ public class VoterProducer implements ClockListener {
 	private int numOfTicksNextPerson;
 	private int averageBoothTime;
 	private int averageCheckInTime;
+	private SimStatus info;
 	
 	private Random r = new Random();
 	
 	public VoterProducer(CheckInBooth booth1, CheckInBooth booth2, 
 			int numOfTicksNextPerson, 
 			int averageBoothTime,
-			int averageCheckInTime) {
+			int averageCheckInTime, SimStatus info) {
 		
 		this.booth1 = booth1;
 		this.booth2 = booth2;
 		this.numOfTicksNextPerson = numOfTicksNextPerson;
 		this.averageBoothTime = averageBoothTime;
 		this.averageCheckInTime = averageCheckInTime;
+		this.info = info;
 	}
 	
 	public void event(int tick) {
@@ -38,7 +40,7 @@ public class VoterProducer implements ClockListener {
 			//sets how long person will take to vote
 			person.setBoothTime(averageBoothTime*0.5*r.nextGaussian() + 
 					averageBoothTime +.5);
-			person.setLeaveTime(tick + 900);
+			person.setLeaveTime(tick + (info.getLeaveTime()));
 			
 			//sets how long person will take to check in 
 			person.setCheckInTime(averageCheckInTime*0.5*
