@@ -44,6 +44,14 @@ public class VotingBoothPanel extends JPanel {
 	 * @return JPanel to be added to the main Panel.
 	 ******************************************************************/
 	private JPanel createInputPanel(){
+		txtSecondsToPerson.setText("20");
+		txtAvgSecondsCheckIn.setText("15");
+		txtTotalSeconds.setText("10000");
+		txtAvgSecVoting.setText("60");
+		txtSecondsLeave.setText("900");
+		txtNumBooths.setText("1");
+		
+		
 		
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new GridLayout(7,2));
@@ -173,10 +181,8 @@ public class VotingBoothPanel extends JPanel {
                 System.exit(0);
 
             }
-            if(e.getSource()==startSim){
-            	Booth[] votingBooths;
-            	BoothQueue boothQueue = new BoothQueue();
-        		votingBooths = new Booth[numBooths];
+            if(e.getSource()==startSim){;
+            	BoothQueue boothQueue = new BoothQueue();;
         				
         			
             	Clock clk = new Clock();
