@@ -41,6 +41,7 @@ public class VoterProducer implements ClockListener {
 			person.setBoothTime(averageBoothTime*0.5*r.nextGaussian() + 
 					averageBoothTime +.5);
 			person.setLeaveTime(tick + (info.getLeaveTime()));
+			person.setTickTime(tick);
 			
 			//sets how long person will take to check in 
 			person.setCheckInTime(averageCheckInTime*0.5*

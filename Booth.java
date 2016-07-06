@@ -27,6 +27,9 @@ public class Booth implements ClockListener {
 			
 //			if (person != null) {
 				if(!boothQueue.getQ().isEmpty()){
+					if(person != null){
+				info.setTotalTime(tick - (person.getTickTime()));
+					}
 				person = boothQueue.getVoter();		// do not send this person as of yet, make them wait. 
 				timeOfNextEvent = tick + (int) (person.getBoothTime() + 1);
 				info.incThroughPut();	

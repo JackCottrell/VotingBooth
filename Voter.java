@@ -5,7 +5,7 @@
 public class Voter {
 	//total time 
 	private int tickTime;
-	
+
 	//the value of tick when the person enters a booth
 	private int boothInTime;
 	

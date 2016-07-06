@@ -208,7 +208,7 @@ public class VotingBoothPanel extends JPanel {
             	
         		//Update Labels
         		throughput.setText("" +info.getThroughPut());
-        		avgVoterFinish.setText("" +(totalSec/info.getThroughPut()));
+        		avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
         		numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
         		maxQAL.setText("" + AL.getMaxQlength());
         		maxQMZ.setText("" + MZ.getMaxQlength());
