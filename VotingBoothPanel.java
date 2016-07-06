@@ -148,9 +148,9 @@ public class VotingBoothPanel extends JPanel {
 			int numBooths;
 			try{
 			   secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
-               secondsCheckIn = Integer.parseDouble(txtAvgSecondsCheckIn.getText());
-               totalSec =Integer.parseDouble(txtTotalSeconds.getText());
-               avgTimeVoting = Integer.parseDouble(txtAvgSecVoting.getText());
+               secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
+               totalSec =Integer.parseInt(txtTotalSeconds.getText());
+               avgTimeVoting = Integer.parseInt(txtAvgSecVoting.getText());
                secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
                 numBooths = Integer.parseInt(txtNumBooths.getText());
 			}
@@ -171,34 +171,44 @@ public class VotingBoothPanel extends JPanel {
 
             }
             if(e.getSource()==startSim){
-            	Sim sim = new Sim(secondsToPerson, secondsCheckIn, totalSec, avgTimeVoting, secondsLeave,
-            			numBooths);
+            	Booth[] votingBooths;
+            	BoothQueue boothQueue = new BoothQueue(votingBooths));
+        		votingBooths = new Booth[numBooths];
+        				
+        		for(int i = 0; i < numBooths; i++){
+        			Booth booth = new Booth(boothQueue);
+        			votingBooths[i] = booth;	
+            	Clock clk = new Clock();
+        	
+        		CheckInBooth AL = new CheckInBooth(boothQueue);
+        		CheckInBooth MZ = new CheckInBooth(boothQueue);
+        		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson, avgTimeVoting, secondsCheckIn);
+        		
+        		clk.add(boothQueue);
+        		clk.add(AL);
+        		clk.add(MZ);
+        		clk.add(produce);
+        		
+
+        		clk.run(10000);
+            	
+        		//Update Labels
+        		throughput = new JLabel("" +boothQueue.getThroughPut());
+        		avgVoterFinish = new JLabel("" +(boothQueue.getThroughPut()/totalSec));
+        		numPeopleLeft = new JLabel(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
+        		maxQAL = new JLabel("" + AL.getMaxQlength());
+        		maxQMZ = new JLabel("" + MZ.getMaxQlength());
+        		votingBoothLine = new JLabel("" );
+        		
         
-            	sim.runSim();
-
-                // int numOfTicksNextPerson = 20
-                // int averageBoothTime = 18
-
+        		
          
-
-                updateLabels(booth,secondsToPerson,secondsCheckIn,totalSec,
-                                    avgTimeVoting,secondsLeave,numBooths );
 
             }
         }
     }
 
-    private void  updateLabels(CheckInBooth booth, int secondsToPerson, int avgSecondsToCheckIn, int totalSeconds,
-                                int avgSecVoting, int secondsToLeave, int numBooths){
-        throughput.setText(""+Sim.getThroughPut());
-        avgVoterFinish.setText((""));
-        numPeopleLeft.setText(""+booth.getLeft());
-        maxQAL.setText("");
-        maxQMZ.setText("");
-        votingBoothLine.setText("" + booth.getMaxQlength());
-
-
-    }	
-		}
+   
+			
 	}
 }
