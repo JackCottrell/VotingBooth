@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -26,7 +25,7 @@ public class VotingBoothPanel extends JPanel {
 	
 	private JButton startSim;
 	private JButton quitSim;
-	private ButtonListener listener;
+	private ButtonListener listener = new ButtonListener();
 	
 	public VotingBoothPanel(){
 		
@@ -84,6 +83,10 @@ public class VotingBoothPanel extends JPanel {
 		startSim = new JButton("Start Simulation");
 		quitSim = new JButton("Quit Simulation");
 		
+		startSim.addActionListener(listener);
+		quitSim.addActionListener(listener);
+		
+		
 		buttonPanel.add(startSim);
 		buttonPanel.add(quitSim);
 		
@@ -140,17 +143,17 @@ public class VotingBoothPanel extends JPanel {
 	private class ButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int secondsToPerson;
-			int secondsCheckIn;
-			int totalSec;
-			int avgTimeVoting; 
-			int secondsLeave;
-			int numBooths;
+			int secondsToPerson = 0;
+			int secondsCheckIn =0;
+			int totalSec =0;
+			int avgTimeVoting =0; 
+			int secondsLeave =0;
+			int numBooths =0;
 			try{
 			   secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
-               secondsCheckIn = Integer.parseDouble(txtAvgSecondsCheckIn.getText());
-               totalSec =Integer.parseDouble(txtTotalSeconds.getText());
-               avgTimeVoting = Integer.parseDouble(txtAvgSecVoting.getText());
+               secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
+               totalSec =Integer.parseInt(txtTotalSeconds.getText());
+               avgTimeVoting = Integer.parseInt(txtAvgSecVoting.getText());
                secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
                 numBooths = Integer.parseInt(txtNumBooths.getText());
 			}
@@ -162,7 +165,7 @@ public class VotingBoothPanel extends JPanel {
 			if (secondsToPerson < 1 || secondsCheckIn <1 || totalSec <1|| avgTimeVoting<1||
 					secondsLeave <1|| numBooths < 1){
 				throw new InvalidParameterException();
-				JOptionPane.showMessageDialog(null, "Input must be greater than 0");
+				//JOptionPane.showMessageDialog(null, "Input must be greater than 0");
 			}
 			
                
@@ -171,34 +174,45 @@ public class VotingBoothPanel extends JPanel {
 
             }
             if(e.getSource()==startSim){
-            	Sim sim = new Sim(secondsToPerson, secondsCheckIn, totalSec, avgTimeVoting, secondsLeave,
-            			numBooths);
+            	Booth[] votingBooths;
+            	BoothQueue boothQueue = new BoothQueue();
+        		votingBooths = new Booth[numBooths];
+        				
+        			
+            	Clock clk = new Clock();
+        	
+        		CheckInBooth AL = new CheckInBooth(boothQueue);
+        		CheckInBooth MZ = new CheckInBooth(boothQueue);
+        		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson, avgTimeVoting, secondsCheckIn);
+        		
+        		clk.add(boothQueue);
+        		clk.add(AL);
+        		clk.add(MZ);
+        		for(int i = 0; i < numBooths; i++){
+        			Booth booth = new Booth(boothQueue);
+        			clk.add(booth);
+        		}
+        		clk.add(produce);
+        		
+
+        		clk.run(totalSec);
+            	
+        		//Update Labels
+        		//throughput.setText("" +booth.getThroughPut());
+        		//avgVoterFinish.setText("" +(totalSec/booth.getThroughPut()));
+        		numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
+        		maxQAL.setText("" + AL.getMaxQlength());
+        		maxQMZ.setText("" + MZ.getMaxQlength());
+        		votingBoothLine.setText("" );
+        		
         
-            	sim.runSim();
-
-                // int numOfTicksNextPerson = 20
-                // int averageBoothTime = 18
-
+        		
          
-
-                updateLabels(booth,secondsToPerson,secondsCheckIn,totalSec,
-                                    avgTimeVoting,secondsLeave,numBooths );
 
             }
         }
     }
 
-    private void  updateLabels(CheckInBooth booth, int secondsToPerson, int avgSecondsToCheckIn, int totalSeconds,
-                                int avgSecVoting, int secondsToLeave, int numBooths){
-        throughput.setText(""+Sim.getThroughPut());
-        avgVoterFinish.setText((""));
-        numPeopleLeft.setText(""+booth.getLeft());
-        maxQAL.setText("");
-        maxQMZ.setText("");
-        votingBoothLine.setText("" + booth.getMaxQlength());
-
-
-    }	
-		}
+   
+			
 	}
-}
