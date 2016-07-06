@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 
 public class BoothQueue implements ClockListener {
@@ -15,13 +14,13 @@ public class BoothQueue implements ClockListener {
 	private int deserters = 0;
 	
 	
-//	//Overall Stats Class
-//	private SimulationState stats;
-//	
-//	//Brings in SimulationState in 
-//	public BoothQueue(SimulationState stats){
-//		this.stats = stats;
-//	}
+	//Overall Stats Class
+	private SimStatus stats;
+	
+	//Brings in SimulationState in 
+	public BoothQueue(SimStatus stats){
+		this.stats = stats;
+	}
 
 	//adds person to Q
 	public void add(Voter person)
@@ -41,7 +40,7 @@ public class BoothQueue implements ClockListener {
 		for(int i = 0; i < Q.size(); i++){
 			if(tick >= Q.get(i).getLeaveTime()){
 				Q.remove(i);
-				//increment people that left
+				stats.incDeserters();
 			}
 		}
 	}
@@ -62,6 +61,5 @@ public class BoothQueue implements ClockListener {
 	
 	public ArrayList<Voter> getQ(){
 		return Q;
-		
 	}
 }

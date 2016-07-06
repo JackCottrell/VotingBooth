@@ -10,9 +10,11 @@ public class CheckInBooth implements ClockListener {
 	private int maxQlength = 0;
 	private Voter person;   
 	private BoothQueue mainQueue;
+	private SimStatus stats;
 	
-	public CheckInBooth(BoothQueue mainQueue){
+	public CheckInBooth(BoothQueue mainQueue, SimStatus stats){
 		this.mainQueue = mainQueue;
+		this.stats = stats;
 	}
 	
 	public void add (Voter person)
@@ -30,6 +32,13 @@ public class CheckInBooth implements ClockListener {
 						+ 1);
 				mainQueue.add(person); 
 			}	
+		}
+		//checks if anyone wants to leave
+		for(int i = 0; i < Q.size(); i++){
+			if(tick >= Q.get(i).getLeaveTime()){
+				Q.remove(i);
+				stats.incDeserters();
+			}
 		}
 	}
 	
