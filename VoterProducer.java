@@ -40,7 +40,7 @@ public class VoterProducer implements ClockListener {
 			if(i == 0){
 				person = new SpecialNeedsVoter();
 			}
-			else if((i > 0) && (i < 4)){
+			else if((i > 0) && (i < 3)){
 				person = new LimitedTimeVoter();
 			}
 			else{
