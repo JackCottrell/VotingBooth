@@ -34,13 +34,24 @@ public class VoterProducer implements ClockListener {
 			nextPerson = tick + (int)(numOfTicksNextPerson*0.5*
 					r.nextGaussian() + numOfTicksNextPerson+.5);
 			
-			//creates new voter
-			Voter person = new Voter();
+			//randomly generates what type of voter is next.
+			int i = r.nextInt(10);
+			Voter person;
+			if(i == 0){
+				person = new SpecialNeedsVoter();
+			}
+			else if((i > 0) && (i < 4)){
+				person = new LimitedTimeVoter();
+			}
+			else{
+				person = new RegularVoter();
+			}
 			
 			//sets how long person will take to vote
 			person.setBoothTime(averageBoothTime*0.5*r.nextGaussian() + 
 					averageBoothTime +.5);
 			person.setLeaveTime(tick + (info.getLeaveTime()));
+			person.setCheckInTime(averageCheckInTime);
 			person.setTickTime(tick);
 			
 			//sets how long person will take to check in 
