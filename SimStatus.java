@@ -1,4 +1,3 @@
-
 public class SimStatus {
 	private int throughPut = 0;
 	private int leaveTime = 0;
@@ -13,7 +12,21 @@ public class SimStatus {
 	private int numPeopleCheckedInSpec = 0;
 	private int timeatCheckInLim = 0;
 	private int numPeopleCheckedInLim = 0;
+	private int numBooths;
+	private int mainQSize;
 	
+	public int getMainQSize() {
+		return mainQSize;
+	}
+	public void setMainQSize(int mainQSize) {
+		this.mainQSize = mainQSize;
+	}
+	public int getNumBooths() {
+		return numBooths;
+	}
+	public void setNumBooths(int numBooths) {
+		this.numBooths = numBooths;
+	}
 	public int getRegVoters() {
 		return regVoters;
 	}

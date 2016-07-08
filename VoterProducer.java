@@ -47,7 +47,7 @@ public class VoterProducer implements ClockListener {
 				info.incLimVoters();
 			}
 			else{
-				person = new RegularVoter();
+				person = new Voter();
 				info.incRegVoters();
 			}
 			
