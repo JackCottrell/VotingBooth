@@ -4,10 +4,10 @@
  */
 public class Voter {
 	//total time 
-	private int tickTime;
+	protected int tickTime;
 
 	//the value of tick when the person enters a booth
-	private int boothInTime;
+	protected int boothInTime;
 	
 	// max time person stays in line
 	protected double boothTime;
@@ -18,6 +18,17 @@ public class Voter {
 	//time untill voter leaves
 	protected int leaveTime;
 	
+	//Time at Check in
+	protected int timeAtCheckin;
+	
+	public int getTimeAtCheckin() {
+		return timeAtCheckin;
+	}
+
+	public void setTimeAtCheckin(int timeAtCheckin) {
+		this.timeAtCheckin = timeAtCheckin;
+	}
+
 	public double getLeaveTime() {
 		return leaveTime;
 	}

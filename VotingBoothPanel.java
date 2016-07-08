@@ -15,6 +15,13 @@ public class VotingBoothPanel extends JPanel {
 	private JLabel maxQAL;
 	private JLabel maxQMZ;
 	private JLabel votingBoothLine;
+	private JLabel deserters;
+	private JLabel avgCheckInTimeSpec;
+	private JLabel avgCheckInTimeLim;
+	private JLabel avgCheckInTimeReg;
+	private JLabel regVoters;
+	private JLabel specVoters;
+	private JLabel limVoters;
 	
 	private JTextField txtSecondsToPerson = new JTextField(8);
 	private JTextField txtAvgSecondsCheckIn = new JTextField(8);
@@ -112,7 +119,7 @@ public class VotingBoothPanel extends JPanel {
 	private JPanel createOutputPanel(){
 		
 		JPanel outputPanel = new JPanel();
-		outputPanel.setLayout(new GridLayout(7,2));
+		outputPanel.setLayout(new GridLayout(14,2));
 		
 		//set instance variables to empty strings, will be changes by
 		//the simulation.
@@ -122,6 +129,13 @@ public class VotingBoothPanel extends JPanel {
 		maxQAL = new JLabel("");
 		maxQMZ = new JLabel("");
 		votingBoothLine = new JLabel("");
+		deserters = new JLabel("");
+		avgCheckInTimeReg = new JLabel("");
+		avgCheckInTimeSpec = new JLabel("");
+		avgCheckInTimeLim = new JLabel("");
+		regVoters = new JLabel("");
+		specVoters = new JLabel("");
+		limVoters = new JLabel("");
 		
 		//add all the labels.
 		outputPanel.add(new JLabel("Output Information"));
@@ -138,9 +152,23 @@ public class VotingBoothPanel extends JPanel {
 		outputPanel.add(maxQMZ);
 		outputPanel.add(new JLabel("Max Que Length Voting Booth Line"));
 		outputPanel.add(votingBoothLine);
+		outputPanel.add(new JLabel("People that left before voting"));
+		outputPanel.add(deserters);
+		outputPanel.add(new JLabel("Number of Regular Voters"));
+		outputPanel.add(regVoters);
+		outputPanel.add(new JLabel("Number of Special Voters"));
+		outputPanel.add(specVoters);
+		outputPanel.add(new JLabel("Number of Limited Voters"));
+		outputPanel.add(limVoters);
+		outputPanel.add(new JLabel("Average Regular Voter Check In"));
+		outputPanel.add(avgCheckInTimeReg);
+		outputPanel.add(new JLabel("Average Special Voter Check In"));
+		outputPanel.add(avgCheckInTimeSpec);
+		outputPanel.add(new JLabel("Average Limited Voter Check In"));
+		outputPanel.add(avgCheckInTimeLim);
 		
 		//resize to fit with other panels.
-		outputPanel.setPreferredSize(new Dimension(600, 160));
+		outputPanel.setPreferredSize(new Dimension(600, 260));
 		outputPanel.revalidate();
 		
 		return outputPanel;
@@ -152,11 +180,12 @@ public class VotingBoothPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int secondsToPerson = 0;
-			int secondsCheckIn =0;
-			int totalSec =0;
-			int avgTimeVoting =0; 
-			int secondsLeave =0;
-			int numBooths =0;
+			int secondsCheckIn = 0;
+			int totalSec = 0;
+			int avgTimeVoting = 0; 
+			int secondsLeave = 0;
+			int numBooths = 0;
+			
 			try{
 			   secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
                secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
@@ -213,6 +242,16 @@ public class VotingBoothPanel extends JPanel {
         		maxQAL.setText("" + AL.getMaxQlength());
         		maxQMZ.setText("" + MZ.getMaxQlength());
         		votingBoothLine.setText("" + boothQueue.getMaxQlength());
+        		deserters.setText("" + info.getDeserters());
+        		avgCheckInTimeReg.setText("" + info.getTimeAtCheckInReg()/
+        							   info.getNumPeopleCheckInReg());
+        		avgCheckInTimeSpec.setText("" + info.getTimeAtCheckInSpec()/
+        							   info.getNumPeopleCheckedInSpec());
+        		avgCheckInTimeLim.setText("" + info.getTimeatCheckInLim()/
+        							info.getNumPeopleCheckedInLim());
+        		regVoters.setText("" +info.getRegVoters());
+        		specVoters.setText("" + info.getSpecVoters());
+        		limVoters.setText("" + info.getLimVoters());
         		
         
         		
