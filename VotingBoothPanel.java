@@ -396,6 +396,32 @@ public class VotingBoothPanel extends JPanel {
 							createBoothPanel();
 							boothPanel.revalidate();
 							boothPanel.repaint();
+							
+							//Update Labels
+						throughput.setText("" +info.getThroughPut());
+							numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
+							maxQAL.setText("" + AL.getMaxQlength());
+							maxQMZ.setText("" + MZ.getMaxQlength());
+							votingBoothLine.setText("" + boothQueue.getMaxQlength());
+							deserters.setText("" + info.getDeserters());
+							regVoters.setText("" +info.getRegVoters());
+							specVoters.setText("" + info.getSpecVoters());
+							limVoters.setText("" + info.getLimVoters());
+							if(info.getNumPeopleCheckInReg() >= 1){
+							avgCheckInTimeReg.setText("" + ((info.getTimeAtCheckInReg()/
+									info.getNumPeopleCheckInReg()) / -1));
+							}
+							if(info.getNumPeopleCheckedInSpec() >= 1){
+							avgCheckInTimeSpec.setText("" + ((info.getTimeAtCheckInSpec()/
+									info.getNumPeopleCheckedInSpec()) / -1));
+							}
+							if(info.getNumPeopleCheckedInLim() >= 1){
+							avgCheckInTimeLim.setText("" + ((info.getTimeatCheckInLim()/
+									info.getNumPeopleCheckedInLim()) / -1));
+							}
+							if(info.getThroughPut() >= 1)
+							avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
+							
 						}
 					}
 				};
@@ -403,24 +429,7 @@ public class VotingBoothPanel extends JPanel {
 				timer.start();
 
 
-				//Update Labels
-//							throughput.setText("" +info.getThroughPut());
-//							avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
-//							numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
-//							maxQAL.setText("" + AL.getMaxQlength());
-//							maxQMZ.setText("" + MZ.getMaxQlength());
-//							votingBoothLine.setText("" + boothQueue.getMaxQlength());
-//							deserters.setText("" + info.getDeserters());
-//							avgCheckInTimeReg.setText("" + info.getTimeAtCheckInReg()/
-//									info.getNumPeopleCheckInReg());
-//							avgCheckInTimeSpec.setText("" + info.getTimeAtCheckInSpec()/
-//									info.getNumPeopleCheckedInSpec());
-//							avgCheckInTimeLim.setText("" + info.getTimeatCheckInLim()/
-//									info.getNumPeopleCheckedInLim());
-//							regVoters.setText("" +info.getRegVoters());
-//							specVoters.setText("" + info.getSpecVoters());
-//							limVoters.setText("" + info.getLimVoters());
-
+				
 			}
 		}
 	}

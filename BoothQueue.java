@@ -26,16 +26,13 @@ public class BoothQueue implements ClockListener {
 	public void add(Voter person)
 	{
 		Q.add(person);
-		stats.setMainQSize(Q.size());
 		if (Q.size() > maxQlength)
 			maxQlength = Q.size();
 	}
 
 	//remove and return the first person in line
 	public Voter getVoter(){
-		Voter temp = Q.remove(0);
-		stats.setMainQSize(Q.size());
-		return temp;
+		return Q.remove(0);
 	}
 	
 	//make sure no one wants to leave
@@ -43,8 +40,6 @@ public class BoothQueue implements ClockListener {
 		for(int i = 0; i < Q.size(); i++){
 			if(tick >= Q.get(i).getLeaveTime()){
 				Q.remove(i);
-				
-				stats.setMainQSize(Q.size());
 				stats.incDeserters();
 			}
 		}

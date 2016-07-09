@@ -28,7 +28,7 @@ public class CheckInBooth implements ClockListener {
 		if (tick >= timeOfNextEvent) {			
 			if (Q.size() >= 1) {
 				//check type of voter and save off time in check in.
-				if(person instanceof Voter){
+				if(person instanceof RegularVoter){
 					stats.setTimeAtCheckInReg(tick - 
 											person.getTickTime());
 					stats.incNumPeopleCheckInReg();

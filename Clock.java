@@ -13,10 +13,10 @@ public class Clock {
 	}
 
 	public void run(int endingTime) {
-		//for (int currentTime = 0; currentTime <= endingTime; currentTime++) {
+		for (int currentTime = 0; currentTime <= endingTime; currentTime++) {
 			for (int j = 0; j < numListeners; j++)
-				myListeners[j].event(endingTime);
-		//}
+				myListeners[j].event(currentTime);
+		}
 	}
 
 	public void add(ClockListener cl) {

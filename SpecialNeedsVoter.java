@@ -1,3 +1,4 @@
+
 public class SpecialNeedsVoter extends Voter {
 
 	public void setLeaveTime(int leaveTime) {
@@ -11,3 +12,4 @@ public class SpecialNeedsVoter extends Voter {
 		this.checkInTime = (checkInTime * 1.5);
 	}
 }
+
