@@ -12,9 +12,27 @@ public class SimStatus {
 	private int numPeopleCheckedInSpec = 0;
 	private int timeatCheckInLim = 0;
 	private int numPeopleCheckedInLim = 0;
-	private int numBooths;
-	private int mainQSize;
+	//number of voting booths
+	private int numBooths = 0;
+	//number of voter in main q at any time
+	private int mainQSize = 0;
+	//number of voters in check in AL q at any time
+	private int ALQsize = 0;
+	//number of voters in check in MZ q at any time
+	private int MZQsize = 0;
 	
+	public int getALQsize() {
+		return ALQsize;
+	}
+	public void setALQsize(int aLQsize) {
+		ALQsize = aLQsize;
+	}
+	public int getMZQsize() {
+		return MZQsize;
+	}
+	public void setMZQsize(int mZQsize) {
+		MZQsize = mZQsize;
+	}
 	public int getMainQSize() {
 		return mainQSize;
 	}
