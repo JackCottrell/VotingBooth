@@ -1,4 +1,5 @@
 public class SimStatus {
+	private int tick = 0;
 	private int throughPut = 0;
 	private int leaveTime = 0;
 	private int deserters = 0;
@@ -21,6 +22,12 @@ public class SimStatus {
 	//number of voters in check in MZ q at any time
 	private int MZQsize = 0;
 	
+	public int getTick() {
+		return tick;
+	}
+	public void setTick(int tick) {
+		this.tick = tick;
+	}
 	public int getALQsize() {
 		return ALQsize;
 	}

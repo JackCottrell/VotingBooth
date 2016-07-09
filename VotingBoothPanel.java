@@ -12,6 +12,7 @@ public class VotingBoothPanel extends JPanel {
 
 	SimStatus info = new SimStatus();
 
+	private JLabel tick;
 	private JLabel throughput;
 	private JLabel avgVoterFinish;
 	private JLabel numPeopleLeft;
@@ -137,10 +138,11 @@ public class VotingBoothPanel extends JPanel {
 	private JPanel createOutputPanel(){
 
 		JPanel outputPanel = new JPanel();
-		outputPanel.setLayout(new GridLayout(14,2));
+		outputPanel.setLayout(new GridLayout(15,2));
 
 		//set instance variables to empty strings, will be changes by
 		//the simulation.
+		tick = new JLabel("0");
 		throughput = new JLabel("");
 		avgVoterFinish = new JLabel("");
 		numPeopleLeft = new JLabel("");
@@ -158,7 +160,9 @@ public class VotingBoothPanel extends JPanel {
 		//add all the labels.
 		outputPanel.add(new JLabel("Output Information"));
 		outputPanel.add(new JLabel("--------------------------------"));
-		outputPanel.add(new JLabel("Throughput"));
+		outputPanel.add(new JLabel("Seconds Elapsed"));
+		outputPanel.add(tick);
+		outputPanel.add(new JLabel("Throughput"));		
 		outputPanel.add(throughput);
 		outputPanel.add(new JLabel("Average Total Voter Time"));
 		outputPanel.add(avgVoterFinish);
@@ -398,6 +402,7 @@ public class VotingBoothPanel extends JPanel {
 							boothPanel.repaint();
 							
 							//Update Labels
+							tick.setText("" + info.getTick());
 						throughput.setText("" +info.getThroughPut());
 							numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
 							maxQAL.setText("" + AL.getMaxQlength());
@@ -408,16 +413,16 @@ public class VotingBoothPanel extends JPanel {
 							specVoters.setText("" + info.getSpecVoters());
 							limVoters.setText("" + info.getLimVoters());
 							if(info.getNumPeopleCheckInReg() >= 1){
-							avgCheckInTimeReg.setText("" + ((info.getTimeAtCheckInReg()/
-									info.getNumPeopleCheckInReg()) / -1));
+							avgCheckInTimeReg.setText("" + (info.getTimeAtCheckInReg()/
+									info.getNumPeopleCheckInReg()));
 							}
 							if(info.getNumPeopleCheckedInSpec() >= 1){
-							avgCheckInTimeSpec.setText("" + ((info.getTimeAtCheckInSpec()/
-									info.getNumPeopleCheckedInSpec()) / -1));
+							avgCheckInTimeSpec.setText("" + (info.getTimeAtCheckInSpec()/
+									info.getNumPeopleCheckedInSpec()));
 							}
 							if(info.getNumPeopleCheckedInLim() >= 1){
-							avgCheckInTimeLim.setText("" + ((info.getTimeatCheckInLim()/
-									info.getNumPeopleCheckedInLim()) / -1));
+							avgCheckInTimeLim.setText("" + (info.getTimeatCheckInLim()/
+									info.getNumPeopleCheckedInLim()));
 							}
 							if(info.getThroughPut() >= 1)
 							avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
