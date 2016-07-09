@@ -48,7 +48,7 @@ public class VotingBoothPanel extends JPanel {
 
 	public VotingBoothPanel(){
 
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		//I made all of the C level stuff in its own panel so I could 
 		//just add anouther to the right with the graphics
@@ -210,13 +210,15 @@ public class VotingBoothPanel extends JPanel {
 		createMainQPanel();
 		createBoothPanel();
 
-		visualPanel.setLayout(new BoxLayout(visualPanel, BoxLayout.X_AXIS));
+		//visualPanel.setLayout(new BoxLayout(visualPanel, BoxLayout.X_AXIS));
 
 		visualPanel.add(checkInQPanel);
 		visualPanel.add(checkInBoothPanel);
 		visualPanel.add(mainQPanel);
 		visualPanel.add(boothPanel);
 
+		visualPanel.setPreferredSize(new Dimension(1000,100));
+		visualPanel.revalidate();
 		return visualPanel;
 	}
 
@@ -226,8 +228,7 @@ public class VotingBoothPanel extends JPanel {
 	private void createCheckInQPanel(){
 		Border border = LineBorder.createGrayLineBorder();
 
-		checkInQPanel.setLayout(new BoxLayout(checkInQPanel,BoxLayout.Y_AXIS));
-
+		checkInQPanel.setLayout(new GridLayout(2,1));
 				String voters1 = "";
 				String voters2 = "";
 
@@ -239,10 +240,12 @@ public class VotingBoothPanel extends JPanel {
 					voters2 = voters2 + "X";
 				}
 
-		JLabel label1 = new JLabel(voters1);
-		JLabel label2 = new JLabel(voters2);
+		JTextField label1 = new JTextField(voters1,4);
+		JTextField label2 = new JTextField(voters2,4);
 		checkInQPanel.add(label1);
 		checkInQPanel.add(label2);
+		label1.setHorizontalAlignment(JTextField.RIGHT);
+		label2.setHorizontalAlignment(JTextField.RIGHT);
 		label1.setBorder(border);
 		label2.setBorder(border);
 
@@ -253,8 +256,7 @@ public class VotingBoothPanel extends JPanel {
 
 		Border border = LineBorder.createGrayLineBorder();
 
-		checkInBoothPanel.setLayout(new BoxLayout(checkInBoothPanel,BoxLayout.Y_AXIS));
-
+		checkInBoothPanel.setLayout(new GridLayout(2,1));
 		JLabel label1 = new JLabel("Check in A-L");
 		JLabel label2 = new JLabel("Check in M-Z");
 
@@ -270,7 +272,7 @@ public class VotingBoothPanel extends JPanel {
 
 		Border border = LineBorder.createGrayLineBorder();
 		
-		mainQPanel.setLayout(new BoxLayout(mainQPanel,BoxLayout.Y_AXIS));
+		mainQPanel.setLayout(new BorderLayout());
 
 		String voters = "";
 
@@ -278,8 +280,10 @@ public class VotingBoothPanel extends JPanel {
 			voters = voters + "X";
 		}
 
-		JLabel label = new JLabel(voters);
-		mainQPanel.add(label);
+		JTextField label = new JTextField(voters,40);
+		label.setHorizontalAlignment(JTextField.RIGHT);
+		mainQPanel.add(label, BorderLayout.CENTER);
+
 		label.setBorder(border);
 	}
 
@@ -400,22 +404,22 @@ public class VotingBoothPanel extends JPanel {
 
 
 				//Update Labels
-				//			throughput.setText("" +info.getThroughPut());
-				//			avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
-				//			numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
-				//			maxQAL.setText("" + AL.getMaxQlength());
-				//			maxQMZ.setText("" + MZ.getMaxQlength());
-				//			votingBoothLine.setText("" + boothQueue.getMaxQlength());
-				//			deserters.setText("" + info.getDeserters());
-				//			avgCheckInTimeReg.setText("" + info.getTimeAtCheckInReg()/
-				//					info.getNumPeopleCheckInReg());
-				//			avgCheckInTimeSpec.setText("" + info.getTimeAtCheckInSpec()/
-				//					info.getNumPeopleCheckedInSpec());
-				//			avgCheckInTimeLim.setText("" + info.getTimeatCheckInLim()/
-				//					info.getNumPeopleCheckedInLim());
-				//			regVoters.setText("" +info.getRegVoters());
-				//			specVoters.setText("" + info.getSpecVoters());
-				//			limVoters.setText("" + info.getLimVoters());
+//							throughput.setText("" +info.getThroughPut());
+//							avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
+//							numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
+//							maxQAL.setText("" + AL.getMaxQlength());
+//							maxQMZ.setText("" + MZ.getMaxQlength());
+//							votingBoothLine.setText("" + boothQueue.getMaxQlength());
+//							deserters.setText("" + info.getDeserters());
+//							avgCheckInTimeReg.setText("" + info.getTimeAtCheckInReg()/
+//									info.getNumPeopleCheckInReg());
+//							avgCheckInTimeSpec.setText("" + info.getTimeAtCheckInSpec()/
+//									info.getNumPeopleCheckedInSpec());
+//							avgCheckInTimeLim.setText("" + info.getTimeatCheckInLim()/
+//									info.getNumPeopleCheckedInLim());
+//							regVoters.setText("" +info.getRegVoters());
+//							specVoters.setText("" + info.getSpecVoters());
+//							limVoters.setText("" + info.getLimVoters());
 
 			}
 		}
