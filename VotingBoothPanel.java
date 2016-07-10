@@ -53,6 +53,9 @@ public class VotingBoothPanel extends JPanel {
     public JLabel[] iconsMain;
 
     public ImageIcon regVoter;
+    public ImageIcon limitedVoter;
+    public ImageIcon specialVoter;
+    public ImageIcon superSpecial;
 
     public VotingBoothPanel(){
 
@@ -241,11 +244,29 @@ public class VotingBoothPanel extends JPanel {
 
 
         regVoter = new ImageIcon("reg.png");
+        limitedVoter = new ImageIcon("limitedNeeds.png");
+        specialVoter = new ImageIcon("specialNeeds.png");
+        superSpecial = new ImageIcon("superSpecial.png");
 
         //rescale image to correct size
         Image regImage = regVoter.getImage();
         Image newRegImage = regImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
         regVoter = new ImageIcon(newRegImage);
+
+        //rescale limited icon
+        Image limImage = limitedVoter.getImage();
+        Image newLimImage = limImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        limitedVoter = new ImageIcon(newLimImage);
+
+        //rescale specialVoter icon
+        Image specialImage = specialVoter.getImage();
+        Image newSpecialImage = specialImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        specialVoter = new ImageIcon(newSpecialImage);
+
+        //rescale super special icon
+        Image superImage = superSpecial.getImage();
+        Image newsuperImage = superImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        superSpecial = new ImageIcon(newSpecialImage);
 
 
         iconsALQueue = new JLabel[info.getALQsize()];
@@ -292,9 +313,11 @@ public class VotingBoothPanel extends JPanel {
     //Panel for Check in booths
     private void createCheckInBoothPanel(){
 
+
         Border border = LineBorder.createGrayLineBorder();
 
-        checkInBoothPanel.setLayout(new GridLayout(2,1));
+        checkInBoothPanel.setLayout(new GridLayout(3,1));
+       
         JLabel label1 = new JLabel("Check in A-L");
         JLabel label2 = new JLabel("Check in M-Z");
 
@@ -311,9 +334,29 @@ public class VotingBoothPanel extends JPanel {
         Border border = LineBorder.createGrayLineBorder();
 
         regVoter = new ImageIcon("reg.png");
+        limitedVoter = new ImageIcon("limitedNeeds.png");
+        specialVoter = new ImageIcon("specialNeeds.png");
+        superSpecial = new ImageIcon("superSpecial.png");
+
+        //rescale image to correct size
         Image regImage = regVoter.getImage();
         Image newRegImage = regImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
         regVoter = new ImageIcon(newRegImage);
+
+        //rescale limited icon
+        Image limImage = limitedVoter.getImage();
+        Image newLimImage = limImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        limitedVoter = new ImageIcon(newLimImage);
+
+        //rescale specialVoter icon
+        Image specialImage = specialVoter.getImage();
+        Image newSpecialImage = specialImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        specialVoter = new ImageIcon(newSpecialImage);
+
+        //rescale super special icon
+        Image superImage = superSpecial.getImage();
+        Image newsuperImage = superImage.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
+        superSpecial = new ImageIcon(newSpecialImage);
 
 
         iconsMain = new JLabel[info.getMainQSize()];
