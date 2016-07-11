@@ -361,7 +361,7 @@ public class VotingBoothPanel extends JPanel {
 
         iconsMain = new JLabel[info.getMainQSize()];
 
-        mainQPanel.setLayout(new BorderLayout());
+        mainQPanel.setLayout(new GridLayout(1,1));
 
         String voters = "";
 
