@@ -43,7 +43,7 @@ public class VotingBoothPanel extends JPanel {
     private JButton startSim;
     private JButton quitSim;
     private JButton addBooth;
-   // private JButton subBooth;
+    private JButton subBooth;
     private ButtonListener listener = new ButtonListener();
 
     //time variable to increment
@@ -135,17 +135,17 @@ public class VotingBoothPanel extends JPanel {
         startSim = new JButton("Start Simulation");
         quitSim = new JButton("Quit Simulation");
         addBooth = new JButton("Add Booth");
-       // subBooth = new JButton("Subtract Booth");
+        subBooth = new JButton("Subtract Booth");
 
         startSim.addActionListener(listener);
         quitSim.addActionListener(listener);
         addBooth.addActionListener(listener);
-       // subBooth.addActionListener(listener);
+        subBooth.addActionListener(listener);
         
         buttonPanel.add(startSim);
         buttonPanel.add(quitSim);
         buttonPanel.add(addBooth);
-        //buttonPanel.add(subBooth);
+        buttonPanel.add(subBooth);
 
         return buttonPanel;
     }
@@ -161,7 +161,7 @@ public class VotingBoothPanel extends JPanel {
     private JPanel createOutputPanel(){
 
         JPanel outputPanel = new JPanel();
-        outputPanel.setLayout(new GridLayout(15,2));
+        outputPanel.setLayout(new GridLayout(19,2));
 
         //set instance variables to empty strings, will be changes by
         //the simulation.
@@ -432,9 +432,11 @@ public class VotingBoothPanel extends JPanel {
             	}
             }
             
-//            if(e.getSource()==subBooth){
-//
-//            }
+            if(e.getSource()==subBooth){
+            	if(info.getNumBooths() > 1){
+            		clk.remBooth();
+            	}
+            }
             
             if(e.getSource()==startSim){
             	
@@ -470,7 +472,7 @@ public class VotingBoothPanel extends JPanel {
                 boothQueue = new BoothQueue(info);
                 info.setLeaveTime(secondsLeave);
 
-                clk = new Clock();
+                clk = new Clock(info);
 
                 CheckInBooth AL = new CheckInBooth(boothQueue, info);
                 CheckInBooth MZ = new CheckInBooth(boothQueue, info);

@@ -94,6 +94,9 @@ public class SimStatus {
 	public void incrNumBooths(){
 		numBooths++;
 	}
+	public void decrNumBooths(){
+		numBooths--;
+	}
 	public int getRegVoters() {
 		return regVoters;
 	}
