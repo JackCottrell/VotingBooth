@@ -1,4 +1,5 @@
 public class SimStatus {
+	private Sim sim;
 	private int tick = 0;
 	private int throughPut = 0;
 	private int leaveTime = 0;
@@ -14,6 +15,17 @@ public class SimStatus {
 	private int numPeopleCheckedInSpec = 0;
 	private int timeatCheckInLim = 0;
 	private int numPeopleCheckedInLim = 0;
+	private int secondsToPerson;
+	private int secondsCheckIn;
+	private int totalSec;
+	private int avgTimeVoting;
+	private int secondsLeave;
+	private VotingBoothPanel panel;
+	private BoothQueue boothQueue;
+	private CheckInBooth AL;
+	private CheckInBooth MZ;
+	
+	
 	//number of voting booths
 	private int numBooths = 0;
 	//number of voter in main q at any time
@@ -31,6 +43,41 @@ public class SimStatus {
 	//number of super special needs voters who voted
 	private int supSpecThrough = 0;
 	
+	public VotingBoothPanel getPanel() {
+		return panel;
+	}
+	public void setPanel(VotingBoothPanel panel) {
+		this.panel = panel;
+		panel.revalidate();
+		panel.repaint();
+	}
+	public void decrNumBooths(){
+		numBooths--;
+	}
+	public BoothQueue getBoothQueue() {
+		return boothQueue;
+	}
+	public void setBoothQueue(BoothQueue boothQueue) {
+		this.boothQueue = boothQueue;
+	}
+	public CheckInBooth getAL() {
+		return AL;
+	}
+	public void setAL(CheckInBooth aL) {
+		AL = aL;
+	}
+	public CheckInBooth getMZ() {
+		return MZ;
+	}
+	public void setMZ(CheckInBooth mZ) {
+		MZ = mZ;
+	}
+	public Sim getSim() {
+		return sim;
+	}
+	public void setSim(Sim sim) {
+		this.sim = sim;
+	}
 	public int getRegThrough() {
 		return regThrough;
 	}
@@ -93,9 +140,6 @@ public class SimStatus {
 	}
 	public void incrNumBooths(){
 		numBooths++;
-	}
-	public void decrNumBooths(){
-		numBooths--;
 	}
 	public int getRegVoters() {
 		return regVoters;
@@ -181,5 +225,35 @@ public class SimStatus {
 	}
 	public void incDeserters() {
 		deserters ++;
+	}
+	public int getSecondsToPerson() {
+		return secondsToPerson;
+	}
+	public void setSecondsToPerson(int secondsToPerson) {
+		this.secondsToPerson = secondsToPerson;
+	}
+	public int getSecondsCheckIn() {
+		return secondsCheckIn;
+	}
+	public void setSecondsCheckIn(int secondsCheckIn) {
+		this.secondsCheckIn = secondsCheckIn;
+	}
+	public int getTotalSec() {
+		return totalSec;
+	}
+	public void setTotalSec(int totalSec) {
+		this.totalSec = totalSec;
+	}
+	public int getAvgTimeVoting() {
+		return avgTimeVoting;
+	}
+	public void setAvgTimeVoting(int avgTimeVoting) {
+		this.avgTimeVoting = avgTimeVoting;
+	}
+	public int getSecondsLeave() {
+		return secondsLeave;
+	}
+	public void setSecondsLeave(int secondsLeave) {
+		this.secondsLeave = secondsLeave;
 	}
 }

@@ -39,14 +39,8 @@ public class VoterProducer implements ClockListener {
 			int i = r.nextInt(10);
 			
 			if(i == 0){
-				//50% chance of special needs been super special needs
-				if(r.nextBoolean()){
-					person = new SpecialNeedsVoter();
-					info.incSpecVoters();
-				}
-				else
-					person = new SuperSpecialNeeds();
-					info.incSupSpecVoters();
+				person = new SpecialNeedsVoter();
+				info.incSpecVoters();
 			}
 			else if((i > 0) && (i < 3)){
 				person = new LimitedTimeVoter();

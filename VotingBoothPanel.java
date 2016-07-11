@@ -10,11 +10,10 @@ import javax.swing.border.LineBorder;
 
 public class VotingBoothPanel extends JPanel {
 
-    SimStatus info = new SimStatus();
     Clock clk;
     BoothQueue boothQueue;
     
-
+    private SimStatus info;
     private JLabel tick;
     private JLabel throughput;
     private JLabel avgVoterFinish;
@@ -44,6 +43,7 @@ public class VotingBoothPanel extends JPanel {
     private JButton quitSim;
     private JButton addBooth;
     private JButton subBooth;
+   // private JButton subBooth;
     private ButtonListener listener = new ButtonListener();
 
     //time variable to increment
@@ -65,8 +65,9 @@ public class VotingBoothPanel extends JPanel {
     public ImageIcon specialVoter;
     public ImageIcon superSpecial;
 
-    public VotingBoothPanel(){
-
+    public VotingBoothPanel(SimStatus info){
+    	
+    	this.info = info;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //I made all of the C level stuff in its own panel so I could
@@ -136,16 +137,19 @@ public class VotingBoothPanel extends JPanel {
         quitSim = new JButton("Quit Simulation");
         addBooth = new JButton("Add Booth");
         subBooth = new JButton("Subtract Booth");
+       // subBooth = new JButton("Subtract Booth");
 
         startSim.addActionListener(listener);
         quitSim.addActionListener(listener);
         addBooth.addActionListener(listener);
         subBooth.addActionListener(listener);
+       // subBooth.addActionListener(listener);
         
         buttonPanel.add(startSim);
         buttonPanel.add(quitSim);
         buttonPanel.add(addBooth);
         buttonPanel.add(subBooth);
+        //buttonPanel.add(subBooth);
 
         return buttonPanel;
     }
@@ -228,6 +232,64 @@ public class VotingBoothPanel extends JPanel {
         return outputPanel;
 
     }
+    public void updatePanels(){
+        //update check in Qs
+        checkInQPanel.removeAll();
+        createCheckInQPanel();
+        checkInQPanel.revalidate();
+        checkInQPanel.repaint();
+
+        //update
+        checkInBoothPanel.removeAll();
+        createCheckInBoothPanel();
+        checkInBoothPanel.revalidate();
+        checkInBoothPanel.repaint();
+
+        //update main Q
+        mainQPanel.removeAll();
+        createMainQPanel();
+        mainQPanel.revalidate();
+        mainQPanel.repaint();
+
+        //update booths
+        boothPanel.removeAll();
+        createBoothPanel();
+        boothPanel.revalidate();
+        boothPanel.repaint();
+
+		// Update Labels
+		tick.setText("" + info.getTick());
+		throughput.setText("" + info.getThroughPut());
+		regThrough.setText("" + info.getRegThrough());
+		limThrough.setText("" + info.getLimThrough());
+		specThrough.setText("" + info.getSpecThrough());
+		numPeopleLeft.setText(""
+				+ (info.getAL().getLeft() + info.getMZ().getLeft() + info
+						.getBoothQueue().getLeft()));
+		maxQAL.setText("" + info.getAL().getMaxQlength());
+		maxQMZ.setText("" + info.getMZ().getMaxQlength());
+		votingBoothLine.setText("" + info.getBoothQueue().getMaxQlength());
+		deserters.setText("" + info.getDeserters());
+		regVoters.setText("" + info.getRegVoters());
+		specVoters.setText("" + info.getSpecVoters());
+		limVoters.setText("" + info.getLimVoters());
+		if (info.getNumPeopleCheckInReg() >= 1) {
+			avgCheckInTimeReg.setText("" + (info.getTimeAtCheckInReg()/
+                    info.getNumPeopleCheckInReg()));
+        }
+        if(info.getNumPeopleCheckedInSpec() >= 1){
+            avgCheckInTimeSpec.setText("" + (info.getTimeAtCheckInSpec()/
+                    info.getNumPeopleCheckedInSpec()));
+        }
+        if(info.getNumPeopleCheckedInLim() >= 1){
+            avgCheckInTimeLim.setText("" + (info.getTimeatCheckInLim()/
+                    info.getNumPeopleCheckedInLim()));
+        }
+        if(info.getThroughPut() >= 1)
+            avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
+
+    }
+
     /*******************************************************************
      *Creates a JPanel that visualy updates all of the Qs and booths
      *
@@ -310,21 +372,6 @@ public class VotingBoothPanel extends JPanel {
             checkInQPanel.add(iconsMZQueue[i]);
         }
 
-
-//
-//        for(int i = 0; i < info.getMZQsize(); i++){
-//            voters2 = voters2 + "X";
-//        }
-//
-//        JTextField label1 = new JTextField(voters1,4);
-//        JTextField label2 = new JTextField(voters2,4);
-        //checkInQPanel.add(iconsALQueue);
-       // checkInQPanel.add(label2);
-//        label1.setHorizontalAlignment(JTextField.RIGHT);
-//        label2.setHorizontalAlignment(JTextField.RIGHT);
-//        label1.setBorder(border);
-//        label2.setBorder(border);
-
     }
 
     //Panel for Check in booths
@@ -386,17 +433,6 @@ public class VotingBoothPanel extends JPanel {
             mainQPanel.add(iconsMain[i]);
         }
 
-
-
-//        for(int i = 0; i < info.getMainQSize(); i++){
-//            voters = voters + "X";
-//        }
-
-//        JTextField label = new JTextField(voters,40);
-//        label.setHorizontalAlignment(JTextField.RIGHT);
-//        mainQPanel.add(label, BorderLayout.CENTER);
-//
-//        label.setBorder(border);
     }
 
     //Panel for booths
@@ -414,6 +450,7 @@ public class VotingBoothPanel extends JPanel {
     }
 
     int totalSec = 0;
+   
 
     private class ButtonListener implements ActionListener{
         @Override
@@ -426,35 +463,32 @@ public class VotingBoothPanel extends JPanel {
             
             //add a booth to clk and increase num of booths in info
             if(e.getSource()==addBooth){
-            	if(info.getNumBooths() < 10){
-            		clk.add(new Booth(boothQueue, info));
-            		info.incrNumBooths();
-            	}
+            	info.getSim().addBooth();
             }
-            
             if(e.getSource()==subBooth){
             	if(info.getNumBooths() > 1){
-            		clk.remBooth();
+            		info.getSim().remBooth();
             	}
             }
             
+            
             if(e.getSource()==startSim){
-            	
-                int secondsToPerson = 0;
-                int secondsCheckIn = 0;
-                int avgTimeVoting = 0;
-                int secondsLeave = 0;
-                int numBooths = 0;
 
                 try{
-                    secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
-                    secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
-                    totalSec =Integer.parseInt(txtTotalSeconds.getText());
-                    avgTimeVoting = Integer.parseInt(txtAvgSecVoting.getText());
-                    secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
-                    numBooths = Integer.parseInt(txtNumBooths.getText());
-                    info.setNumBooths(numBooths);
-                    if (secondsToPerson < 1 || secondsCheckIn <1 || totalSec <1|| avgTimeVoting<1||
+                    info.setSecondsToPerson(Integer.parseInt(txtSecondsToPerson.getText()));
+                    info.setSecondsCheckIn(Integer.parseInt(txtAvgSecondsCheckIn.getText()));
+                    info.setTotalSec(Integer.parseInt(txtTotalSeconds.getText()));
+                    info.setAvgTimeVoting(Integer.parseInt(txtAvgSecVoting.getText()));
+                    info.setSecondsLeave(Integer.parseInt(txtSecondsLeave.getText()));
+                    info.setNumBooths(Integer.parseInt(txtNumBooths.getText()));
+                    
+                    int secondsToPerson = info.getSecondsToPerson();
+                    int secondsCheckIn = info.getSecondsCheckIn();
+                    int avgTimeVoting = info.getAvgTimeVoting();
+                    int secondsLeave = info.getSecondsLeave();
+                    int numBooths = info.getNumBooths();
+                    
+                    if (secondsToPerson < 1 || secondsCheckIn <1 || info.getTotalSec() <1|| avgTimeVoting<1||
                             secondsLeave <1|| numBooths < 1){
                         throw new InvalidParameterException();
                         //JOptionPane.showMessageDialog(null, "Input must be greater than 0");
@@ -468,106 +502,14 @@ public class VotingBoothPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "Numbers can not be negative");
                     System.exit(0);
                 }
-
-                boothQueue = new BoothQueue(info);
-                info.setLeaveTime(secondsLeave);
-
-                clk = new Clock(info);
-
-                CheckInBooth AL = new CheckInBooth(boothQueue, info);
-                CheckInBooth MZ = new CheckInBooth(boothQueue, info);
-                VoterProducer produce = new VoterProducer(AL, MZ,
-                        secondsToPerson, avgTimeVoting, secondsCheckIn,
-                        info);
-
-                clk.add(boothQueue);
-                clk.add(AL);
-                clk.add(MZ);
-                for(int i = 0; i < numBooths; i++){
-                    Booth booth = new Booth(boothQueue, info);
-                    clk.add(booth);
-                }
-                clk.add(produce);
-
-
-                //new action listener for the timer
-                ActionListener action = new ActionListener()
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent event)
-                    {
-                        if (currentTime <= totalSec) {
-                            currentTime++;
-                            clk.run(currentTime);
-
-                            info.setALQsize(AL.getLeft());
-                            info.setMZQsize(MZ.getLeft());
-
-                            //update check in Qs
-                            checkInQPanel.removeAll();
-                            createCheckInQPanel();
-                            checkInQPanel.revalidate();
-                            checkInQPanel.repaint();
-
-                            //update
-                            checkInBoothPanel.removeAll();
-                            createCheckInBoothPanel();
-                            checkInBoothPanel.revalidate();
-                            checkInBoothPanel.repaint();
-
-                            //update main Q
-                            mainQPanel.removeAll();
-                            createMainQPanel();
-                            mainQPanel.revalidate();
-                            mainQPanel.repaint();
-
-                            //update booths
-                            boothPanel.removeAll();
-                            createBoothPanel();
-                            boothPanel.revalidate();
-                            boothPanel.repaint();
-
-                            //Update Labels
-                            tick.setText("" + info.getTick());
-                            throughput.setText("" +info.getThroughPut());
-                            regThrough.setText(""+info.getRegThrough());
-                            limThrough.setText(""+info.getLimThrough());
-                            specThrough.setText(""+info.getSpecThrough());
-                            numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
-                            maxQAL.setText("" + AL.getMaxQlength());
-                            maxQMZ.setText("" + MZ.getMaxQlength());
-                            votingBoothLine.setText("" + boothQueue.getMaxQlength());
-                            deserters.setText("" + info.getDeserters());
-                            regVoters.setText("" +info.getRegVoters());
-                            specVoters.setText("" + info.getSpecVoters());
-                            limVoters.setText("" + info.getLimVoters());
-                            if(info.getNumPeopleCheckInReg() >= 1){
-                                avgCheckInTimeReg.setText("" + (info.getTimeAtCheckInReg()/
-                                        info.getNumPeopleCheckInReg()));
-                            }
-                            if(info.getNumPeopleCheckedInSpec() >= 1){
-                                avgCheckInTimeSpec.setText("" + (info.getTimeAtCheckInSpec()/
-                                        info.getNumPeopleCheckedInSpec()));
-                            }
-                            if(info.getNumPeopleCheckedInLim() >= 1){
-                                avgCheckInTimeLim.setText("" + (info.getTimeatCheckInLim()/
-                                        info.getNumPeopleCheckedInLim()));
-                            }
-                            if(info.getThroughPut() >= 1)
-                                avgVoterFinish.setText("" +(info.getTotalTime()/info.getThroughPut()));
-
-                        }
-                    }
-                };
-                Timer timer = new Timer(10, action);
-                timer.start();
-
-
-
-            }
-        }
+                
+                info.getSim().runSim();
+                
+        
     }
 
 
-
+    }
+        
 }
+} 

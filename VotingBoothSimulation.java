@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+ import javax.swing.JFrame;
 
 public class VotingBoothSimulation{
 
@@ -6,8 +6,11 @@ public class VotingBoothSimulation{
 	{	
 		JFrame frame = new JFrame ("Voting Booth Simulation");
 		frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		VotingBoothPanel panel = new VotingBoothPanel();
-		frame.getContentPane().add(panel);
+		SimStatus info = new SimStatus();
+		Sim sim = new Sim(info);
+		info.setSim(sim);
+		info.setPanel(new VotingBoothPanel(info));
+		frame.getContentPane().add(info.getPanel());
 		frame.setSize(1000, 700);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
