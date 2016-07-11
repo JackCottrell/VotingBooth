@@ -39,8 +39,14 @@ public class VoterProducer implements ClockListener {
 			int i = r.nextInt(10);
 			
 			if(i == 0){
+				if(r.nextBoolean()){
 				person = new SpecialNeedsVoter();
 				info.incSpecVoters();
+				}
+				else{
+					person = new SuperSpecialNeeds();
+					info.incSupSpecVoters();
+				}
 			}
 			else if((i > 0) && (i < 3)){
 				person = new LimitedTimeVoter();
