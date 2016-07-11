@@ -11,6 +11,9 @@ import javax.swing.border.LineBorder;
 public class VotingBoothPanel extends JPanel {
 
     SimStatus info = new SimStatus();
+    Clock clk;
+    BoothQueue boothQueue;
+    
 
     private JLabel tick;
     private JLabel throughput;
@@ -26,6 +29,9 @@ public class VotingBoothPanel extends JPanel {
     private JLabel regVoters;
     private JLabel specVoters;
     private JLabel limVoters;
+    private JLabel regThrough;
+    private JLabel limThrough;
+    private JLabel specThrough;
 
     private JTextField txtSecondsToPerson = new JTextField(8);
     private JTextField txtAvgSecondsCheckIn = new JTextField(8);
@@ -36,6 +42,8 @@ public class VotingBoothPanel extends JPanel {
 
     private JButton startSim;
     private JButton quitSim;
+    private JButton addBooth;
+   // private JButton subBooth;
     private ButtonListener listener = new ButtonListener();
 
     //time variable to increment
@@ -126,13 +134,18 @@ public class VotingBoothPanel extends JPanel {
 
         startSim = new JButton("Start Simulation");
         quitSim = new JButton("Quit Simulation");
+        addBooth = new JButton("Add Booth");
+       // subBooth = new JButton("Subtract Booth");
 
         startSim.addActionListener(listener);
         quitSim.addActionListener(listener);
-
-
+        addBooth.addActionListener(listener);
+       // subBooth.addActionListener(listener);
+        
         buttonPanel.add(startSim);
         buttonPanel.add(quitSim);
+        buttonPanel.add(addBooth);
+        //buttonPanel.add(subBooth);
 
         return buttonPanel;
     }
@@ -166,6 +179,9 @@ public class VotingBoothPanel extends JPanel {
         regVoters = new JLabel("");
         specVoters = new JLabel("");
         limVoters = new JLabel("");
+        regThrough = new JLabel("");
+        limThrough = new JLabel("");
+        specThrough = new JLabel("");
 
         //add all the labels.
         outputPanel.add(new JLabel("Output Information"));
@@ -174,6 +190,12 @@ public class VotingBoothPanel extends JPanel {
         outputPanel.add(tick);
         outputPanel.add(new JLabel("Throughput"));
         outputPanel.add(throughput);
+        outputPanel.add(new JLabel("Regular Throughput"));
+        outputPanel.add(regThrough);
+        outputPanel.add(new JLabel("Special Throughput"));
+        outputPanel.add(specThrough);
+        outputPanel.add(new JLabel("Limited Time Throughput"));
+        outputPanel.add(limThrough);
         outputPanel.add(new JLabel("Average Total Voter Time"));
         outputPanel.add(avgVoterFinish);
         outputPanel.add(new JLabel("Number of People Left in Line"));
@@ -200,7 +222,7 @@ public class VotingBoothPanel extends JPanel {
         outputPanel.add(avgCheckInTimeLim);
 
         //resize to fit with other panels.
-        outputPanel.setPreferredSize(new Dimension(600, 260));
+        outputPanel.setPreferredSize(new Dimension(1500, 260));
         outputPanel.revalidate();
 
         return outputPanel;
@@ -240,8 +262,6 @@ public class VotingBoothPanel extends JPanel {
     //Pannel that has booth check in Qs
     //needs to be able to see the check in Qs to get their length
     private void createCheckInQPanel(){
-        Border border = LineBorder.createGrayLineBorder();
-
 
         regVoter = new ImageIcon("reg.png");
         limitedVoter = new ImageIcon("limitedNeeds.png");
@@ -272,9 +292,6 @@ public class VotingBoothPanel extends JPanel {
         iconsALQueue = new JLabel[info.getALQsize()];
         iconsMZQueue = new JLabel[info.getMZQsize()];
         checkInQPanel.setLayout(new GridLayout(2,1));
-//        String voters1 = "";
-//        String voters2 = "";
-
 
         //Instantiate new label for AL Queue and set to ImageIcon
         for(int i = 0; i < info.getALQsize(); i++){
@@ -331,8 +348,6 @@ public class VotingBoothPanel extends JPanel {
     //Panel for main Q
     private void createMainQPanel(){
 
-        Border border = LineBorder.createGrayLineBorder();
-
         regVoter = new ImageIcon("reg.png");
         limitedVoter = new ImageIcon("limitedNeeds.png");
         specialVoter = new ImageIcon("specialNeeds.png");
@@ -363,8 +378,6 @@ public class VotingBoothPanel extends JPanel {
 
         mainQPanel.setLayout(new GridLayout(1,1));
 
-        String voters = "";
-
         //Instantiate new label for main Queue and set to ImageIcon
         for(int i = 0; i < info.getMainQSize(); i++){
             iconsMain[i] = new JLabel("");
@@ -388,7 +401,7 @@ public class VotingBoothPanel extends JPanel {
 
     //Panel for booths
     private void createBoothPanel(){
-
+   
         Border border = LineBorder.createGrayLineBorder();
 
         boothPanel.setLayout(new BoxLayout(boothPanel,BoxLayout.Y_AXIS));
@@ -405,48 +418,59 @@ public class VotingBoothPanel extends JPanel {
     private class ButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int secondsToPerson = 0;
-            int secondsCheckIn = 0;
-            int avgTimeVoting = 0;
-            int secondsLeave = 0;
-            int numBooths = 0;
-
-            try{
-                secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
-                secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
-                totalSec =Integer.parseInt(txtTotalSeconds.getText());
-                avgTimeVoting = Integer.parseInt(txtAvgSecVoting.getText());
-                secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
-                numBooths = Integer.parseInt(txtNumBooths.getText());
-                info.setNumBooths(numBooths);
-                if (secondsToPerson < 1 || secondsCheckIn <1 || totalSec <1|| avgTimeVoting<1||
-                        secondsLeave <1|| numBooths < 1){
-                    throw new InvalidParameterException();
-                    //JOptionPane.showMessageDialog(null, "Input must be greater than 0");
-                }
-            }
-            catch(NumberFormatException e1){
-                JOptionPane.showMessageDialog(null, "Must be a number");
-                System.exit(0);
-            }
-            catch(InvalidParameterException e2){
-                JOptionPane.showMessageDialog(null, "Numbers can not be negative");
-                System.exit(0);
-            }
-
-
 
             if(e.getSource()==quitSim){
                 System.exit(0);
 
             }
+            
+            //add a booth to clk and increase num of booths in info
+            if(e.getSource()==addBooth){
+            	if(info.getNumBooths() < 10){
+            		clk.add(new Booth(boothQueue, info));
+            		info.incrNumBooths();
+            	}
+            }
+            
+//            if(e.getSource()==subBooth){
+//
+//            }
+            
             if(e.getSource()==startSim){
+            	
+                int secondsToPerson = 0;
+                int secondsCheckIn = 0;
+                int avgTimeVoting = 0;
+                int secondsLeave = 0;
+                int numBooths = 0;
 
+                try{
+                    secondsToPerson = Integer.parseInt(txtSecondsToPerson.getText());
+                    secondsCheckIn = Integer.parseInt(txtAvgSecondsCheckIn.getText());
+                    totalSec =Integer.parseInt(txtTotalSeconds.getText());
+                    avgTimeVoting = Integer.parseInt(txtAvgSecVoting.getText());
+                    secondsLeave = Integer.parseInt(txtSecondsLeave.getText());
+                    numBooths = Integer.parseInt(txtNumBooths.getText());
+                    info.setNumBooths(numBooths);
+                    if (secondsToPerson < 1 || secondsCheckIn <1 || totalSec <1|| avgTimeVoting<1||
+                            secondsLeave <1|| numBooths < 1){
+                        throw new InvalidParameterException();
+                        //JOptionPane.showMessageDialog(null, "Input must be greater than 0");
+                    }
+                }
+                catch(NumberFormatException e1){
+                    JOptionPane.showMessageDialog(null, "Must be a number");
+                    System.exit(0);
+                }
+                catch(InvalidParameterException e2){
+                    JOptionPane.showMessageDialog(null, "Numbers can not be negative");
+                    System.exit(0);
+                }
 
-                BoothQueue boothQueue = new BoothQueue(info);
+                boothQueue = new BoothQueue(info);
                 info.setLeaveTime(secondsLeave);
 
-                Clock clk = new Clock();
+                clk = new Clock();
 
                 CheckInBooth AL = new CheckInBooth(boothQueue, info);
                 CheckInBooth MZ = new CheckInBooth(boothQueue, info);
@@ -504,6 +528,9 @@ public class VotingBoothPanel extends JPanel {
                             //Update Labels
                             tick.setText("" + info.getTick());
                             throughput.setText("" +info.getThroughPut());
+                            regThrough.setText(""+info.getRegThrough());
+                            limThrough.setText(""+info.getLimThrough());
+                            specThrough.setText(""+info.getSpecThrough());
                             numPeopleLeft.setText(""+(AL.getLeft() + MZ.getLeft() + boothQueue.getLeft()));
                             maxQAL.setText("" + AL.getMaxQlength());
                             maxQMZ.setText("" + MZ.getMaxQlength());

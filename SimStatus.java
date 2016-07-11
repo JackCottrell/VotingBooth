@@ -6,6 +6,7 @@ public class SimStatus {
 	private int totalTime = 0;
 	private int regVoters = 0;
 	private int specVoters = 0;
+	private int supSpecVoters = 0;
 	private int limVoters = 0;
 	private int timeatCheckInReg = 0;
 	private int numPeopleCheckInReg = 0;
@@ -21,7 +22,45 @@ public class SimStatus {
 	private int ALQsize = 0;
 	//number of voters in check in MZ q at any time
 	private int MZQsize = 0;
+	//number of regular voters who voted
+	private int regThrough = 0;
+	//number of limeted time voters who voted
+	private int limThrough = 0;
+	//number of special needs voters who voted
+	private int specThrough = 0;
+	//number of super special needs voters who voted
+	private int supSpecThrough = 0;
 	
+	public int getRegThrough() {
+		return regThrough;
+	}
+	public void incRegThrough() {
+		regThrough++;
+	}
+	public int getLimThrough() {
+		return limThrough;
+	}
+	public void incLimThrough() {
+		limThrough++;
+	}
+	public int getSpecThrough() {
+		return specThrough;
+	}
+	public void incSpecThrough() {
+		specThrough++;
+	}
+	public int getSupSpecThrough() {
+		return supSpecThrough;
+	}
+	public void incSupSpecThrough() {
+		supSpecThrough++;
+	}
+	public int getSupSpecVoters() {
+		return supSpecVoters;
+	}
+	public void incSupSpecVoters() {
+		supSpecVoters++;
+	}
 	public int getTick() {
 		return tick;
 	}
@@ -51,6 +90,9 @@ public class SimStatus {
 	}
 	public void setNumBooths(int numBooths) {
 		this.numBooths = numBooths;
+	}
+	public void incrNumBooths(){
+		numBooths++;
 	}
 	public int getRegVoters() {
 		return regVoters;

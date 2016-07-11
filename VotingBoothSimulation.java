@@ -8,9 +8,9 @@ public class VotingBoothSimulation{
 		frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		VotingBoothPanel panel = new VotingBoothPanel();
 		frame.getContentPane().add(panel);
-		frame.setSize(1000, 600);
+		frame.setSize(1000, 700);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		frame.setResizable(false);
+		frame.setResizable(true);
 	}
 }

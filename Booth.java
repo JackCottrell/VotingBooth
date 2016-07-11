@@ -33,6 +33,17 @@ public class Booth implements ClockListener {
 				person = boothQueue.getVoter();		// do not send this person as of yet, make them wait. 
 				timeOfNextEvent = tick + (int) (person.getBoothTime() + 1);
 				info.incThroughPut();	
+				
+				//count each type of voter that voted
+				if(person instanceof RegularVoter){
+					info.incRegThrough();
+				}
+				if(person instanceof SpecialNeedsVoter){
+					info.incSpecThrough();
+				}
+				if(person instanceof LimitedTimeVoter){
+					info.incLimThrough();
+				}
 			}
 			//			}	
 		}
