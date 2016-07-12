@@ -1,122 +1,85 @@
-//
-///**
-// * @author Roger Ferguson
-// *
-// */
-//public class Sim {
-//	
-//	private Booth[] votingBooths;
-//	private int secondsToPerson;
-//	private int secondsCheckIn;
-//	private int totalSec;
-//	private int avgTimeVoting;
-//	private int secondsLeave;
-//	private int numBooths;
-//	
-//	public Sim(int secondsToPerson, int secondsCheckIn, int totalSec, int avgTimeVoting, 
-//							int secondsLeave, int numBooths){
-//		this.secondsToPerson = secondsToPerson;
-//		this.secondsCheckIn = secondsCheckIn;
-//		this.totalSec = totalSec;
-//		this.avgTimeVoting = avgTimeVoting;
-//		this.secondsLeave = secondsLeave;
-//		this.numBooths = numBooths;
-//		
-//		votingBooths = new Booth[numBooths];
-//				
-//		for(int i = 0; i < numBooths; i++){
-//			Booth booth = new Booth();
-//			votingBooths[i] = booth;	
-//		}	
-//	}
-//				
-//	public void runSim() {
-//
-//		Clock clk = new Clock();
-//		BoothQueue boothQueue = new BoothQueue(getBooths());
-//		CheckInBooth AL = new CheckInBooth(boothQueue);
-//		CheckInBooth MZ = new CheckInBooth(boothQueue);
-//		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson, avgTimeVoting, secondsCheckIn);
-//		
-//		clk.add(boothQueue);
-//		clk.add(AL);
-//		clk.add(MZ);
-//		clk.add(produce);
-//		for(int i = 0; i < numBooths; i++)
-//			clk.add(getBooths()[i]);
-//
-//		clk.run(10000);
-//	}
-//
-//	public Booth[] getBooths() {
-//		return votingBooths;
-//	}
-//
-//
-//	public void setBooths(Booth[] booths) {
-//		this.votingBooths = booths;
-//	}
-//
-//
-//	public int getSecondsToPerson() {
-//		return secondsToPerson;
-//	}
-//
-//
-//	public void setSecondsToPerson(int secondsToPerson) {
-//		this.secondsToPerson = secondsToPerson;
-//	}
-//
-//
-//	public double getSecondsCheckIn() {
-//		return secondsCheckIn;
-//	}
-//
-//
-//	public void setSecondsCheckIn(int secondsCheckIn) {
-//		this.secondsCheckIn = secondsCheckIn;
-//	}
-//
-//
-//	public double getTotalSec() {
-//		return totalSec;
-//	}
-//
-//
-//	public void setTotalSec(int totalSec) {
-//		this.totalSec = totalSec;
-//	}
-//
-//
-//	public double getAvgTimeVoting() {
-//		return avgTimeVoting;
-//	}
-//
-//
-//	public void setAvgTimeVoting(int avgTimeVoting) {
-//		this.avgTimeVoting = avgTimeVoting;
-//	}
-//
-//
-//	public int getSecondsLeave() {
-//		return secondsLeave;
-//	}
-//
-//
-//	public void setSecondsLeave(int secondsLeave) {
-//		this.secondsLeave = secondsLeave;
-//	}
-//
-//
-//	public int getNumBooths() {
-//		return numBooths;
-//	}
-//
-//
-//	public void setNumBooths(int numBooths) {
-//		this.numBooths = numBooths;
-//	}
-//
-//
-//	
-//}
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+
+/**
+ * @author Roger Ferguson
+ *
+ */
+public class Sim {
+	
+	private SimStatus info;
+	private int currentTime = 0;
+	private Clock clk;
+	
+	public Sim(SimStatus info){
+		this.info = info;
+		
+	}
+				
+	public void runSim() {
+		int secondsToPerson = info.getSecondsToPerson();
+		int secondsCheckIn = info.getSecondsCheckIn();
+		int totalSec = info.getTotalSec();
+		int avgTimeVoting = info.getAvgTimeVoting();
+		int secondsLeave = info.getSecondsLeave();
+		int numBooths = info.getNumBooths();
+		
+		BoothQueue boothQueue = new BoothQueue(info);
+		info.setBoothQueue(boothQueue);
+        info.setLeaveTime(secondsLeave);
+
+		clk = new Clock(info);
+		
+		CheckInBooth AL = new CheckInBooth(boothQueue, info);
+		info.setAL(AL);
+		CheckInBooth MZ = new CheckInBooth(boothQueue, info);
+		info.setMZ(MZ);
+		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson,
+				avgTimeVoting, secondsCheckIn, info);
+
+		clk.add(boothQueue);
+		clk.add(AL);
+		clk.add(MZ);
+		for (int i = 0; i < numBooths; i++) {
+			Booth booth = new Booth(boothQueue, info);
+			clk.add(booth);
+		}
+		clk.add(produce);
+
+		// new action listener for the timer
+		ActionListener action = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if (currentTime <= totalSec) {
+					currentTime++;
+					clk.run(currentTime);
+
+					info.setALQsize(AL.getLeft());
+					info.setMZQsize(MZ.getLeft());
+					
+					//VotingBoothPanel panel = new VotingBoothPanel(info);
+					info.getPanel().updatePanels();
+				}
+			}
+		};
+		Timer timer = new Timer(10, action);
+		timer.start();
+
+	}
+
+	public SimStatus getInfo() {
+		return info;
+	}
+	public void addBooth(){
+		if(info.getNumBooths() < 10){
+    		clk.add(new Booth(info.getBoothQueue(), info));
+    		info.incrNumBooths();
+    	}
+	}
+	public void remBooth(){
+		clk.remBooth();
+	}
+}

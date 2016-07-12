@@ -1,8 +1,7 @@
-
 /**
  * @author   Roger Ferguson
  */
-public class Voter {
+public abstract class Voter {
 	//total time 
 	protected int tickTime;
 

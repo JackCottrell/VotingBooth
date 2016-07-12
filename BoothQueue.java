@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class BoothQueue implements ClockListener {
@@ -26,20 +25,26 @@ public class BoothQueue implements ClockListener {
 	public void add(Voter person)
 	{
 		Q.add(person);
+		stats.setMainQSize(Q.size());
 		if (Q.size() > maxQlength)
 			maxQlength = Q.size();
 	}
 
 	//remove and return the first person in line
 	public Voter getVoter(){
-		return Q.remove(0);
+		Voter temp = Q.remove(0);
+		stats.setMainQSize(Q.size());
+		return temp;
 	}
 	
 	//make sure no one wants to leave
 	public void event(int tick){
+		stats.setTick(tick);
 		for(int i = 0; i < Q.size(); i++){
 			if(tick >= Q.get(i).getLeaveTime()){
 				Q.remove(i);
+				
+				stats.setMainQSize(Q.size());
 				stats.incDeserters();
 			}
 		}

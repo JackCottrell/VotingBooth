@@ -1,4 +1,5 @@
 
-public class RegularVoter extends Voter {
+public class RegularVoter extends Voter
+{
 
 }

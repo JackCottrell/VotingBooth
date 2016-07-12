@@ -1,4 +1,3 @@
-
 public class LimitedTimeVoter extends Voter {
 
 	public void setLeaveTime(int leaveTime) {
