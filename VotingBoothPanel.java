@@ -28,9 +28,11 @@ public class VotingBoothPanel extends JPanel {
 	private JLabel regVoters;
 	private JLabel specVoters;
 	private JLabel limVoters;
+	private JLabel supSpecVoters;
 	private JLabel regThrough;
 	private JLabel limThrough;
 	private JLabel specThrough;
+	private JLabel supSpecThrough;
 
 	private JTextField txtSecondsToPerson = new JTextField(8);
 	private JTextField txtAvgSecondsCheckIn = new JTextField(8);
@@ -171,7 +173,7 @@ public class VotingBoothPanel extends JPanel {
 	private JPanel createOutputPanel(){
 
 		JPanel outputPanel = new JPanel();
-		outputPanel.setLayout(new GridLayout(19,2));
+		outputPanel.setLayout(new GridLayout(21,2));
 
 		//set instance variables to empty strings, will be changes by
 		//the simulation.
@@ -189,9 +191,11 @@ public class VotingBoothPanel extends JPanel {
 		regVoters = new JLabel("");
 		specVoters = new JLabel("");
 		limVoters = new JLabel("");
+		supSpecVoters = new JLabel("");
 		regThrough = new JLabel("");
 		limThrough = new JLabel("");
 		specThrough = new JLabel("");
+		supSpecThrough = new JLabel("");
 
 		//add all the labels.
 		outputPanel.add(new JLabel("Output Information"));
@@ -206,6 +210,8 @@ public class VotingBoothPanel extends JPanel {
 		outputPanel.add(specThrough);
 		outputPanel.add(new JLabel("Limited Time Throughput"));
 		outputPanel.add(limThrough);
+		outputPanel.add(new JLabel("Super Special Throughput"));
+		outputPanel.add(supSpecThrough);
 		outputPanel.add(new JLabel("Average Total Voter Time"));
 		outputPanel.add(avgVoterFinish);
 		outputPanel.add(new JLabel("Number of People Left in Line"));
@@ -224,6 +230,8 @@ public class VotingBoothPanel extends JPanel {
 		outputPanel.add(specVoters);
 		outputPanel.add(new JLabel("Number of Limited Voters"));
 		outputPanel.add(limVoters);
+		outputPanel.add(new JLabel("Number of Super Special Voters"));
+		outputPanel.add(supSpecVoters);
 		outputPanel.add(new JLabel("Average Regular Voter Check In"));
 		outputPanel.add(avgCheckInTimeReg);
 		outputPanel.add(new JLabel("Average Special Voter Check In"));
@@ -269,6 +277,7 @@ public class VotingBoothPanel extends JPanel {
 		regThrough.setText("" + info.getRegThrough());
 		limThrough.setText("" + info.getLimThrough());
 		specThrough.setText("" + info.getSpecThrough());
+		supSpecThrough.setText("" + info.getSupSpecThrough());
 		numPeopleLeft.setText(""
 				+ (info.getAL().getLeft() + info.getMZ().getLeft() + info
 						.getBoothQueue().getLeft()));
@@ -279,6 +288,7 @@ public class VotingBoothPanel extends JPanel {
 		regVoters.setText("" + info.getRegVoters());
 		specVoters.setText("" + info.getSpecVoters());
 		limVoters.setText("" + info.getLimVoters());
+		supSpecVoters.setText("" + info.getSupSpecVoters());
 		if (info.getNumPeopleCheckInReg() >= 1) {
 			avgCheckInTimeReg.setText("" + (info.getTimeAtCheckInReg()/
 					info.getNumPeopleCheckInReg()));

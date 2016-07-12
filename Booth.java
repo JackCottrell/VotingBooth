@@ -62,6 +62,9 @@ public class Booth implements ClockListener {
 				if(person instanceof LimitedTimeVoter){
 					info.incLimThrough();
 				}
+				if(person instanceof SuperSpecialNeeds){
+					info.incSupSpecThrough();
+				}
 			}
 		}
 	}
