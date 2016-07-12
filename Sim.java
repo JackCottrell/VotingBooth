@@ -3,16 +3,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-
-/**
- * @author Roger Ferguson
- *
- */
 public class Sim {
 	
 	private SimStatus info;
 	private int currentTime = 0;
 	private Clock clk;
+	private VoterProducer produce;
+	int secondsToPerson;
+	int secondsCheckIn;
+	int totalSec;
+	int avgTimeVoting;
+	int secondsLeave;
+	int numBooths;
+	
 	
 	public Sim(SimStatus info){
 		this.info = info;
@@ -20,12 +23,12 @@ public class Sim {
 	}
 				
 	public void runSim() {
-		int secondsToPerson = info.getSecondsToPerson();
-		int secondsCheckIn = info.getSecondsCheckIn();
-		int totalSec = info.getTotalSec();
-		int avgTimeVoting = info.getAvgTimeVoting();
-		int secondsLeave = info.getSecondsLeave();
-		int numBooths = info.getNumBooths();
+		secondsToPerson = info.getSecondsToPerson();
+		secondsCheckIn = info.getSecondsCheckIn();
+		totalSec = info.getTotalSec();
+		avgTimeVoting = info.getAvgTimeVoting();
+		secondsLeave = info.getSecondsLeave();
+		numBooths = info.getNumBooths();
 		
 		BoothQueue boothQueue = new BoothQueue(info);
 		info.setBoothQueue(boothQueue);
@@ -37,7 +40,7 @@ public class Sim {
 		info.setAL(AL);
 		CheckInBooth MZ = new CheckInBooth(boothQueue, info);
 		info.setMZ(MZ);
-		VoterProducer produce = new VoterProducer(AL, MZ, secondsToPerson,
+		produce = new VoterProducer(AL, MZ, secondsToPerson,
 				avgTimeVoting, secondsCheckIn, info);
 
 		clk.add(boothQueue);
@@ -68,6 +71,24 @@ public class Sim {
 		Timer timer = new Timer(10, action);
 		timer.start();
 
+	}
+	
+	public void update(){
+		secondsToPerson = info.getSecondsToPerson();
+		secondsCheckIn = info.getSecondsCheckIn();
+		totalSec = info.getTotalSec();
+		avgTimeVoting = info.getAvgTimeVoting();
+		secondsLeave = info.getSecondsLeave();
+		numBooths = info.getNumBooths();
+		
+		 produce = new VoterProducer(info.getAL(), info.getMZ(), secondsToPerson,
+				avgTimeVoting, secondsCheckIn, info);
+		 
+		 for(int i = 0; i < clk.getMyListeners().length; i++){
+			 if(clk.getMyListeners()[i] instanceof VoterProducer){
+				 clk.getMyListeners()[i] = produce;
+			 }
+		 }
 	}
 
 	public SimStatus getInfo() {

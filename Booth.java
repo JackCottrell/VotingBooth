@@ -1,39 +1,57 @@
-import java.util.ArrayList;
-/**
- * @author   Roger Ferguson
- */
-public class Booth implements ClockListener {	
+/**********************************************************************
+Booth class holds one voter at a time for the length of time it takes 
+them to vote.
+
+@author Jack Cottrell, Robert Molenhouse, Colin Lewis
+@version Summer 2016
+
+@implements ClockListener
+ **********************************************************************/
+public class Booth implements ClockListener {
+
+	/** Time until person is done voting and the booth is empty */
 	private int timeOfNextEvent = 0;
-	private Voter person;   // this is the person at the booth. 
+
+	/** Voter that is in the booth */
+	private Voter person;
+
+	/** Queue of voters waiting to vote */
 	private BoothQueue boothQueue;
+
+	/** Class that holds all the info on the simulation */
 	private SimStatus info;
 
+	/*******************************************************************
+	Constructor creates a new booth that is feed by boothQueue
+	
+	@param info holds all information on sim
+	@param boothQueue that line of waiting voters
+	 ******************************************************************/
 	public Booth(BoothQueue boothQueue, SimStatus info){
 		this.boothQueue = boothQueue;
 		this.info = info;
 	}
 
-	//	public void add (Voter person)
-	//	{
-	//		this.person = person;
-	//	}
-
+	/*******************************************************************
+	Runs each time the clock calls event. Checks if the booth is empty
+	and if it is, it add the person from the front of the queue
+	
+	@param tick the current time stamp from the clock
+	 ******************************************************************/
 	public void event (int tick){
 		if (tick >= timeOfNextEvent) {
-			//			if (person != null) { 			// Notice the delay that takes place here
-			//				person.getDestination().add(person);    // take this person to the next station. 
-			//			person = null;				// I have send the person on. 
-			//			}
 
-			//			if (person != null) {
+			//Check if there are any voters waiting to vote
 			if(!boothQueue.getQ().isEmpty()){
+				//there is a person---get there time to leave the booth
 				if(person != null){
 					info.setTotalTime(tick - (person.getTickTime()));
 				}
-				person = boothQueue.getVoter();		// do not send this person as of yet, make them wait. 
+
+				person = boothQueue.getVoter();		
 				timeOfNextEvent = tick + (int) (person.getBoothTime() + 1);
 				info.incThroughPut();	
-				
+
 				//count each type of voter that voted
 				if(person instanceof RegularVoter){
 					info.incRegThrough();
@@ -45,7 +63,6 @@ public class Booth implements ClockListener {
 					info.incLimThrough();
 				}
 			}
-			//			}	
 		}
 	}
 

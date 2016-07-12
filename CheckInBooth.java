@@ -110,4 +110,8 @@ public class CheckInBooth implements ClockListener {
 	public int getMaxQlength() {
 		return maxQlength;
 	}
+	
+	public ArrayList<Voter> getQ() {
+		return Q;
+	}
 }
