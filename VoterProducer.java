@@ -1,19 +1,46 @@
-
-
 import java.util.Random;
-
+/**********************************************************************
+Produces different types of voters for the simulation
+@author Jack Cottrell, Robert Molenhouse, Colin Lewis
+@version Summer 2016
+@implements ClockListener
+ **********************************************************************/
 public class VoterProducer implements ClockListener {
 	
+	/** Time when next voter will be created */ 
 	private int nextPerson = 0;
+	
+	/** First check in booth */ 
 	private CheckInBooth booth1;
+	
+	/** Second check in booth */ 
 	private CheckInBooth booth2;
+	
+	/** Time between creating voters */ 
 	private int numOfTicksNextPerson;
+	
+	/** Average time for a voter to vote */ 
 	private int averageBoothTime;
+	
+	/** Average time for a voter to check in */ 
 	private int averageCheckInTime;
+	
+	/** Keeps all information on the state of the simulation */ 
 	private SimStatus info;
 	
+	/** Generates random numbers */ 
 	private Random r = new Random();
 	
+	/*******************************************************************
+	Constructor gets all voter information needed to create voters
+	
+	@param booth1 Check in booth for A through L
+	@param booth2 Check in booth for M through Z
+	@param numOfTicksNextPerson time between creating voters
+	@param averageBoothTime average time it takes a voter to vote
+	@param averageCheckInTime average time it takes a voter to check in
+	@param info holds status of the simulation
+	*******************************************************************/
 	public VoterProducer(CheckInBooth booth1, CheckInBooth booth2, 
 			int numOfTicksNextPerson, 
 			int averageBoothTime,
@@ -27,6 +54,12 @@ public class VoterProducer implements ClockListener {
 		this.info = info;
 	}
 	
+	/*******************************************************************
+	Creates new voters of all types based on probability. Called by the 
+	clock
+	
+	@param tick current time of the simulation
+	*******************************************************************/
 	public void event(int tick) {
 		if (nextPerson <= tick) {
 			
@@ -39,8 +72,15 @@ public class VoterProducer implements ClockListener {
 			int i = r.nextInt(10);
 			
 			if(i == 0){
-				person = new SpecialNeedsVoter();
-				info.incSpecVoters();
+				//50% chance of special needs been super special needs
+				if(r.nextBoolean()){
+					person = new SuperSpecialNeeds();
+					info.incSupSpecVoters();
+				}
+				else{
+					person = new SpecialNeedsVoter();
+					info.incSpecVoters();
+				}
 			}
 			else if((i > 0) && (i < 3)){
 				person = new LimitedTimeVoter();
