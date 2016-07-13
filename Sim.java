@@ -22,22 +22,22 @@ public class Sim {
 	private VoterProducer produce;
 	
 	/** Time until the next voter is created */
-	int secondsToPerson;
+	private int secondsToPerson;
 	
 	/** Average seconds for a voter to check in */
-	int secondsCheckIn;
+	private int secondsCheckIn;
 	
 	/** Total time the simulation will run */
-	int totalSec;
+	private int totalSec;
 	
 	/** Average time it takes a voter to vote */
-	int avgTimeVoting;
+	private int avgTimeVoting;
 	
 	/** Time a voter will wait before they leave */
-	int secondsLeave;
+	private int secondsLeave;
 	
 	/** Number of voting booths in the simulation */
-	int numBooths;
+	private int numBooths;
 	
 	/*******************************************************************
 	Constructor brings in info, which stors all information on the
