@@ -51,9 +51,6 @@ public class VotingBoothPanel extends JPanel {
 	// private JButton subBooth;
 	private ButtonListener listener = new ButtonListener();
 
-	//time variable to increment
-	private int currentTime = 0;
-
 	//JPanels for visual display
 	private JPanel panel;
 	private JPanel checkInBoothPanel;
@@ -495,24 +492,6 @@ private JPanel createMZQ(){
 
 		label1.setBorder(border);
 		label2.setBorder(border);
-	}
-	private JPanel createCheckInBoothPanel2(){
-
-		JPanel panel = new JPanel();
-		Border border = LineBorder.createGrayLineBorder();
-
-		panel.setLayout(new GridLayout(3,1));
-
-		JButton label1 = new JButton("Check in A-L");
-		JButton label2 = new JButton("Check in M-Z");
-
-		panel.add(label1);
-		panel.add(label2);
-
-		label1.setBorder(border);
-		label2.setBorder(border);
-		
-		return panel;
 	}
 	private JPanel createVoterKeyPanel(){
 		//keyPanel.setLayout(new GridLayout(1,8));
